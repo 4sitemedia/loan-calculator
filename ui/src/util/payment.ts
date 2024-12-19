@@ -17,10 +17,11 @@ const calculateDivisor = (
 };
 
 const calculatePMI = (
+  purchasePrice: number,
   principalAmount: number,
   monthlyPMIRate?: number
 ): number => {
-  if (!monthlyPMIRate) {
+  if (!monthlyPMIRate || principalAmount / purchasePrice <= 0.8) {
     return 0;
   }
 
@@ -40,7 +41,8 @@ export const calculatePaymentAmount = (
   if (
     !parameters.monthlyInterestRate ||
     !parameters.numberPayments ||
-    !parameters.principalAmount
+    !parameters.principalAmount ||
+    !parameters.purchasePrice
   ) {
     return;
   }
@@ -50,9 +52,15 @@ export const calculatePaymentAmount = (
     monthlyPMIRate,
     numberPayments,
     principalAmount,
+    purchasePrice,
   } = parameters;
 
-  if (monthlyInterestRate <= 0 || numberPayments <= 0 || principalAmount <= 0) {
+  if (
+    monthlyInterestRate <= 0 ||
+    numberPayments <= 0 ||
+    principalAmount <= 0 ||
+    purchasePrice < principalAmount
+  ) {
     return;
   }
 
@@ -62,7 +70,11 @@ export const calculatePaymentAmount = (
   );
 
   const divisor: number = calculateDivisor(monthlyInterestRate, numberPayments);
-  const pmi: number = calculatePMI(principalAmount, monthlyPMIRate);
+  const pmi: number = calculatePMI(
+    purchasePrice,
+    principalAmount,
+    monthlyPMIRate
+  );
 
   return principalAmount * (dividend / divisor) + pmi;
 };

@@ -10,21 +10,17 @@ const MonthlyPayment = (
   useEffect(() => {
     const amount: number | undefined = calculatePaymentAmount(props);
 
-    if (amount) {
-      setPaymentAmount(
-        new Intl.NumberFormat("us-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(amount)
-      );
-    } else {
-      setPaymentAmount("");
-    }
+    setPaymentAmount(
+      new Intl.NumberFormat("us-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount ?? 0)
+    );
   }, [props]);
 
   return (
     <>
-      <span className="font-bold">{paymentAmount}</span>
+      Monthly Payment: <span className="font-bold">{paymentAmount}</span>
     </>
   );
 };

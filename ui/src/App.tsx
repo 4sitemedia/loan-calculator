@@ -1,10 +1,10 @@
-import PaymentCalculator from "./components/PaymentCalculator";
+import MortgageCalculator from "./components/MortgageCalculator";
 
 function App() {
   return (
     <>
       <div className="m-4">
-        <PaymentCalculator />
+        <MortgageCalculator />
       </div>
     </>
   );

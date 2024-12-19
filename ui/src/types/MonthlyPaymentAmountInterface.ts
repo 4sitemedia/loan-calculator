@@ -3,4 +3,5 @@ export interface MonthlyPaymentAmountInterface {
   monthlyPMIRate?: number | undefined;
   numberPayments: number | undefined;
   principalAmount: number | undefined;
+  purchasePrice: number | undefined;
 }
