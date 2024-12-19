@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { MonthlyPaymentAmountInterface } from "../types/MonthlyPaymentAmountInterface";
-import { calculatePaymentAmount } from "../util/payment";
+import React, { useEffect, useState } from 'react';
+import { MonthlyPaymentAmountInterface } from '../types/MonthlyPaymentAmountInterface';
+import { calculatePaymentAmount } from '../util/payment';
 
 const MonthlyPayment = (
   props: MonthlyPaymentAmountInterface
@@ -11,9 +11,9 @@ const MonthlyPayment = (
     const amount: number | undefined = calculatePaymentAmount(props);
 
     setPaymentAmount(
-      new Intl.NumberFormat("us-US", {
-        style: "currency",
-        currency: "USD",
+      new Intl.NumberFormat('us-US', {
+        style: 'currency',
+        currency: 'USD',
       }).format(amount ?? 0)
     );
   }, [props]);

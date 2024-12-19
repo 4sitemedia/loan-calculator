@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { NumberInputProps } from "../types/NumberInputProps";
-import { sanitizeNumberInput, validateNumber } from "../util/validation";
-import { PMIResponse } from "../types/PMIResponse";
+import React, { useState } from 'react';
+import { NumberInputProps } from '../types/NumberInputProps';
+import { sanitizeNumberInput, validateNumber } from '../util/validation';
 
 const PMIRate = (props: NumberInputProps): React.JSX.Element => {
   const { setValue } = props;
 
-  const [annualPMIRate, setAnnualPMIRate] = useState<string>("");
+  const [annualPMIRate, setAnnualPMIRate] = useState<string>('');
 
   /**
    * event handler for setting the pmi rate
@@ -23,30 +21,10 @@ const PMIRate = (props: NumberInputProps): React.JSX.Element => {
       setAnnualPMIRate(value);
       setValue(rate / 12 / 100);
     } else {
-      setAnnualPMIRate("");
+      setAnnualPMIRate('');
       setValue(undefined);
     }
   };
-
-  useEffect(() => {
-    /**
-     * fetch the initial pmi value
-     */
-    async function fetchPMI() {
-      try {
-        const response = await axios.get<PMIResponse>(
-          "http://localhost:3000/pmi"
-        );
-        const pmi: number = response.data.pmi;
-
-        setAnnualPMIRate(pmi.toString());
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    void fetchPMI();
-  }, []);
 
   return (
     <>

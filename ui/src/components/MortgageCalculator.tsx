@@ -1,10 +1,10 @@
-import { useState } from "react";
-import InterestRate from "./InterestRate";
-import LoanTerm from "./LoanTerm";
-import MonthlyPayment from "./MonthlyPayment";
-import PMIRate from "./PMIRate";
-import PrincipalAmount from "./PrincipalAmount";
-import PurchasePrice from "./PurchasePrice";
+import { useState } from 'react';
+import InterestRate from './InterestRate';
+import LoanTerm from './LoanTerm';
+import MonthlyPayment from './MonthlyPayment';
+import PMIRate from './PMIRate';
+import PrincipalAmount from './PrincipalAmount';
+import PurchasePrice from './PurchasePrice';
 
 function MortgageCalculator() {
   const [monthlyInterestRate, setMonthlyInterestRate] = useState<

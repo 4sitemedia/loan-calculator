@@ -1,5 +1,5 @@
-import AmortizationTable from "./components/AmortizationTable";
-import MortgageCalculator from "./components/MortgageCalculator";
+import AmortizationTable from './components/AmortizationTable';
+import MortgageCalculator from './components/MortgageCalculator';
 
 function App() {
   return (

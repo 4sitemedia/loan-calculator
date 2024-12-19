@@ -1,4 +1,4 @@
-import { MonthlyPaymentAmountInterface } from "../types/MonthlyPaymentAmountInterface";
+import { MonthlyPaymentAmountInterface } from '../types/MonthlyPaymentAmountInterface';
 
 const calculateDividend = (
   monthlyInterestRate: number,
@@ -31,7 +31,7 @@ const calculatePMI = (
 /**
  * if possible, calculate a monthly mortgage payment based on the given data
  * based on the formula:
- * M = P * (r * (1 + r) ^ n) / ((1 + r) ^ (n - 1))
+ * M = P * (r * (1 + r) ^ n) / ((1 + r) ^ (n - 1)) + PMI
  *
  * @param parameters
  */

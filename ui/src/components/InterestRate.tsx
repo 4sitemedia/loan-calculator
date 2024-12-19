@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { NumberInputProps } from "../types/NumberInputProps";
-import { sanitizeNumberInput, validateNumber } from "../util/validation";
+import React, { useState } from 'react';
+import { NumberInputProps } from '../types/NumberInputProps';
+import { sanitizeNumberInput, validateNumber } from '../util/validation';
 
 const InterestRate = (props: NumberInputProps): React.JSX.Element => {
   const { setValue } = props;
 
-  const [annualInterestRate, setAnnualInterestRate] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [annualInterestRate, setAnnualInterestRate] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   /**
    * event handler for setting the interest rate
@@ -19,12 +19,12 @@ const InterestRate = (props: NumberInputProps): React.JSX.Element => {
     const rate: number = Number.parseFloat(value);
 
     if (validateNumber(rate, 0.1)) {
-      setErrorMessage("");
+      setErrorMessage('');
       setAnnualInterestRate(value);
       setValue(rate / 12 / 100);
     } else {
-      setErrorMessage("Please enter a positive number.");
-      setAnnualInterestRate("");
+      setErrorMessage('Please enter a positive number.');
+      setAnnualInterestRate('');
       setValue(undefined);
     }
   };

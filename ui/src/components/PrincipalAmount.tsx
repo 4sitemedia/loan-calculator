@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { NumberInputProps } from "../types/NumberInputProps";
-import { sanitizeNumberInput, validateNumber } from "../util/validation";
+import React, { useState } from 'react';
+import { NumberInputProps } from '../types/NumberInputProps';
+import { sanitizeNumberInput, validateNumber } from '../util/validation';
 
 const PrincipalAmount = (props: NumberInputProps): React.JSX.Element => {
   const { setValue } = props;
 
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [principal, setPrincipal] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [principal, setPrincipal] = useState<string>('');
 
   /**
    * event handler for setting the principal amount
@@ -19,12 +19,12 @@ const PrincipalAmount = (props: NumberInputProps): React.JSX.Element => {
     const amount: number = Number.parseFloat(value);
 
     if (validateNumber(amount, 1)) {
-      setErrorMessage("");
+      setErrorMessage('');
       setPrincipal(value);
       setValue(amount);
     } else {
-      setErrorMessage("Please enter a positive number.");
-      setPrincipal("");
+      setErrorMessage('Please enter a positive number.');
+      setPrincipal('');
       setValue(undefined);
     }
   };

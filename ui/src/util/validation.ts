@@ -4,7 +4,7 @@
  * @param value
  */
 export const sanitizeNumberInput = (value: string): string => {
-  return value.replace(/[^.\d]/g, "");
+  return value.replace(/[^.\d]/g, '');
 };
 
 /**
@@ -22,9 +22,9 @@ export const validateNumber = (
   requireInteger = false
 ): boolean => {
   return (
-    typeof value === "number" &&
+    typeof value === 'number' &&
     (!requireInteger || Number.isInteger(value)) &&
-    (typeof max === "undefined" || value <= max) &&
-    (typeof min === "undefined" || value >= min)
+    (typeof max === 'undefined' || value <= max) &&
+    (typeof min === 'undefined' || value >= min)
   );
 };

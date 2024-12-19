@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { NumberInputProps } from "../types/NumberInputProps";
-import { sanitizeNumberInput, validateNumber } from "../util/validation";
+import React, { useState } from 'react';
+import { NumberInputProps } from '../types/NumberInputProps';
+import { sanitizeNumberInput, validateNumber } from '../util/validation';
 
 const PurchasePrice = (props: NumberInputProps): React.JSX.Element => {
   const { setValue } = props;
 
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [price, setPrice] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [price, setPrice] = useState<string>('');
 
   /**
    * event handler for setting the purchase price
@@ -17,12 +17,12 @@ const PurchasePrice = (props: NumberInputProps): React.JSX.Element => {
     const amount: number = Number.parseFloat(value);
 
     if (validateNumber(amount, 1)) {
-      setErrorMessage("");
+      setErrorMessage('');
       setPrice(value);
       setValue(amount);
     } else {
-      setErrorMessage("Please enter a positive number.");
-      setPrice("");
+      setErrorMessage('Please enter a positive number.');
+      setPrice('');
       setValue(undefined);
     }
   };

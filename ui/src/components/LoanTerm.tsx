@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { NumberInputProps } from "../types/NumberInputProps";
-import { sanitizeNumberInput, validateNumber } from "../util/validation";
+import React, { useState } from 'react';
+import { NumberInputProps } from '../types/NumberInputProps';
+import { sanitizeNumberInput, validateNumber } from '../util/validation';
 
 const LoanTerm = (props: NumberInputProps): React.JSX.Element => {
   const { setValue } = props;
 
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [loanTerm, setLoanTerm] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [loanTerm, setLoanTerm] = useState<string>('');
 
   /**
    * event handler for setting the loan term
@@ -19,12 +19,12 @@ const LoanTerm = (props: NumberInputProps): React.JSX.Element => {
     const term: number = Number.parseFloat(value);
 
     if (validateNumber(term, 1, undefined, true)) {
-      setErrorMessage("");
+      setErrorMessage('');
       setLoanTerm(value);
       setValue(term * 12);
     } else {
-      setErrorMessage("Please enter a positive number.");
-      setLoanTerm("");
+      setErrorMessage('Please enter a positive number.');
+      setLoanTerm('');
       setValue(undefined);
     }
   };
