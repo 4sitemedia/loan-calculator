@@ -12,8 +12,6 @@ export default tseslint.config(
       js.configs.recommended,
       ...tseslint.configs.strictTypeChecked,
       ...tseslint.configs.stylisticTypeChecked,
-      'plugin:@typescript-eslint/recommended',
-      'eslint-config-prettier',
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {

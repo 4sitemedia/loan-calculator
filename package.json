@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "build": "npm run build:ui",
+    "build:ui": "cd ui && npm run build",
+    "dev": "npm run dev:ui",
+    "dev:ui": "cd ui && npm run dev",
+    "prepare": "husky",
+    "pre-commit": "npm run pre-commit:ui",
+    "pre-commit:ui": "cd ui && npm run type-check && npm run lint"
+  },
+  "dependencies": {
+    "husky": "^9.1.7"
+  }
+}
