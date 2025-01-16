@@ -1,45 +1,47 @@
 import React, { useState } from 'react';
-import { NumberInputProps } from '../types/NumberInputProps';
+import { useAppDispatch } from '../store/hooks';
+import { setPurchasePrice } from '../store/purchasePriceSlice';
 import { sanitizeNumberInput, validateNumber } from '../util/validation';
+import ErrorMessage from './ErrorMessage';
+import InputField from './InputField';
 
-const PurchasePrice = (props: NumberInputProps): React.JSX.Element => {
-  const { setValue } = props;
+const PurchasePrice = (): React.JSX.Element => {
+  const dispatch = useAppDispatch();
 
-  const [errorMessage, setErrorMessage] = useState<string>('');
-  const [price, setPrice] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string | undefined>('');
+  const [purchasePrice, setPurchasePriceValue] = useState<string>('');
 
   /**
    * event handler for setting the purchase price
    * @param event
    */
-  const onChangePrice = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const onChangePurchasePrice = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     const value: string = sanitizeNumberInput(event.target.value);
     const amount: number = Number.parseFloat(value);
 
     if (validateNumber(amount, 1)) {
-      setErrorMessage('');
-      setPrice(value);
-      setValue(amount);
+      dispatch(setPurchasePrice(amount));
+      setErrorMessage(undefined);
+      setPurchasePriceValue(value.toString());
     } else {
+      dispatch(setPurchasePrice(0));
       setErrorMessage('Please enter a positive number.');
-      setPrice('');
-      setValue(undefined);
+      setPurchasePriceValue('');
     }
   };
 
   return (
     <>
-      <label className="text-gray-900">
-        Purchase Price
-        <input
-          className="border px-1 py-0.5 w-full"
-          name="principal"
-          onChange={onChangePrice}
-          placeholder="Principal Amount"
-          value={price}
-        />
-      </label>
-      <span className="text-red-700 text-sm">{errorMessage}</span>
+      <InputField
+        label="Purchase Price"
+        name="purchase-price"
+        placeholder="Purchase Price"
+        onChange={onChangePurchasePrice}
+        value={purchasePrice}
+      />
+      <ErrorMessage message={errorMessage} />
     </>
   );
 };

@@ -1,33 +1,3 @@
-import { MonthlyPaymentAmountInterface } from '../types/MonthlyPaymentAmountInterface';
-
-const calculateDividend = (
-  monthlyInterestRate: number,
-  numberPayments: number
-): number => {
-  return (
-    monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberPayments)
-  );
-};
-
-const calculateDivisor = (
-  monthlyInterestRate: number,
-  numberPayments: number
-): number => {
-  return Math.pow(1 + monthlyInterestRate, numberPayments) - 1;
-};
-
-const calculatePMI = (
-  purchasePrice: number,
-  principalAmount: number,
-  monthlyPMIRate?: number
-): number => {
-  if (!monthlyPMIRate || principalAmount / purchasePrice <= 0.8) {
-    return 0;
-  }
-
-  return monthlyPMIRate * principalAmount;
-};
-
 /**
  * if possible, calculate a monthly mortgage payment based on the given data
  * based on the formula:
@@ -35,46 +5,79 @@ const calculatePMI = (
  *
  * @param parameters
  */
-export const calculatePaymentAmount = (
-  parameters: MonthlyPaymentAmountInterface
-): number | undefined => {
+export const calculateMonthlyPaymentAmount = ({
+  monthlyInterestRate,
+  monthlyPMIRate,
+  numberPayments,
+  loanAmount,
+  principalAmount,
+  purchasePrice,
+}: {
+  monthlyInterestRate: number;
+  monthlyPMIRate?: number;
+  numberPayments: number;
+  loanAmount: number;
+  principalAmount: number;
+  purchasePrice: number;
+}): number => {
   if (
-    !parameters.monthlyInterestRate ||
-    !parameters.numberPayments ||
-    !parameters.principalAmount ||
-    !parameters.purchasePrice
-  ) {
-    return;
-  }
-
-  const {
-    monthlyInterestRate,
-    monthlyPMIRate,
-    numberPayments,
-    principalAmount,
-    purchasePrice,
-  } = parameters;
-
-  if (
-    monthlyInterestRate <= 0 ||
+    loanAmount <= 0 ||
+    monthlyInterestRate < 0 ||
     numberPayments <= 0 ||
     principalAmount <= 0 ||
-    purchasePrice < principalAmount
+    purchasePrice < loanAmount
   ) {
-    return;
+    return 0;
   }
 
-  const dividend: number = calculateDividend(
+  const monthlyPercentage = calculateMonthlyPercentage({
     monthlyInterestRate,
-    numberPayments
-  );
+    numberPayments,
+  });
 
-  const divisor: number = calculateDivisor(monthlyInterestRate, numberPayments);
-  const pmi: number = calculatePMI(
-    purchasePrice,
+  const pmi: number = calculatePMIAmount({
+    loanAmount,
+    monthlyPMIRate,
     principalAmount,
-    monthlyPMIRate
-  );
+    purchasePrice,
+  });
 
-  return principalAmount * (dividend / divisor) + pmi;
+  return loanAmount * monthlyPercentage + pmi;
+};
+
+const calculateMonthlyPercentage = ({
+  monthlyInterestRate,
+  numberPayments,
+}: {
+  monthlyInterestRate: number;
+  numberPayments: number;
+}): number => {
+  if (monthlyInterestRate === 0) {
+    return 1 / numberPayments;
+  }
+
+  const dividend: number =
+    monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberPayments);
+
+  const divisor: number = Math.pow(1 + monthlyInterestRate, numberPayments) - 1;
+
+  return dividend / divisor;
+};
+
+export const calculatePMIAmount = ({
+  loanAmount,
+  monthlyPMIRate,
+  principalAmount,
+  purchasePrice,
+}: {
+  loanAmount: number;
+  monthlyPMIRate?: number;
+  principalAmount: number;
+  purchasePrice: number;
+}): number => {
+  if (!monthlyPMIRate || principalAmount / purchasePrice <= 0.8) {
+    return 0;
+  }
+
+  return monthlyPMIRate * loanAmount;
 };

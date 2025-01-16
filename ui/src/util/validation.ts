@@ -1,10 +1,13 @@
 /**
- * returns the given string with non-numeric characters removed
+ * returns the given string with invalid / non-numeric characters removed
  *
- * @param value
+ * @param input
  */
-export const sanitizeNumberInput = (value: string): string => {
-  return value.replace(/[^.\d]/g, '');
+export const sanitizeNumberInput = (input: string): string => {
+  const value: string = input.replace(/[^.\d]/g, '');
+  const split: string[] = value.split('.');
+
+  return split.length > 2 ? `${split[0]}.${split[1]}` : value;
 };
 
 /**
@@ -13,17 +16,14 @@ export const sanitizeNumberInput = (value: string): string => {
  * @param value
  * @param min
  * @param max
- * @param requireInteger
  */
 export const validateNumber = (
   value: number | undefined,
   min?: number,
-  max?: number,
-  requireInteger = false
+  max?: number
 ): boolean => {
   return (
     typeof value === 'number' &&
-    (!requireInteger || Number.isInteger(value)) &&
     (typeof max === 'undefined' || value <= max) &&
     (typeof min === 'undefined' || value >= min)
   );

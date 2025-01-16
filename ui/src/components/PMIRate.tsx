@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { NumberInputProps } from '../types/NumberInputProps';
+import { useAppDispatch } from '../store/hooks';
+import { setPMIRate } from '../store/pmiRateSlice';
 import { sanitizeNumberInput, validateNumber } from '../util/validation';
+import ErrorMessage from './ErrorMessage';
+import InputField from './InputField';
 
-const PMIRate = (props: NumberInputProps): React.JSX.Element => {
-  const { setValue } = props;
+const PMIRate = (): React.JSX.Element => {
+  const dispatch = useAppDispatch();
 
   const [annualPMIRate, setAnnualPMIRate] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
   /**
    * event handler for setting the pmi rate
@@ -17,27 +21,30 @@ const PMIRate = (props: NumberInputProps): React.JSX.Element => {
     const value: string = sanitizeNumberInput(event.target.value);
     const rate: number = Number.parseFloat(value);
 
-    if (validateNumber(rate, 0)) {
+    if (validateNumber(rate, 0, 100)) {
+      dispatch(setPMIRate(rate));
       setAnnualPMIRate(value);
-      setValue(rate / 12 / 100);
+      setErrorMessage('');
     } else {
+      dispatch(setPMIRate(0));
       setAnnualPMIRate('');
-      setValue(undefined);
+
+      if (value) {
+        setErrorMessage('Please enter a number between zero and one hunderd.');
+      }
     }
   };
 
   return (
     <>
-      <label className="text-gray-900">
-        Private Mortgage Insurance (PMI) Rate
-        <input
-          className="border px-1 py-0.5 w-full"
-          name="pmi-rate"
-          onChange={onChangePMIRate}
-          placeholder="Annual PMI Rate"
-          value={annualPMIRate}
-        />
-      </label>
+      <InputField
+        label="Private Mortgage Insurance (PMI) Rate"
+        name="pmi-rate"
+        placeholder="Annual PMI Rate"
+        onChange={onChangePMIRate}
+        value={annualPMIRate}
+      />
+      <ErrorMessage message={errorMessage} />
     </>
   );
 };

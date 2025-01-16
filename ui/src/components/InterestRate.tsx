@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { NumberInputProps } from '../types/NumberInputProps';
+import { useAppDispatch } from '../store/hooks';
+import { setInterestRate } from '../store/interestRateSlice';
 import { sanitizeNumberInput, validateNumber } from '../util/validation';
+import ErrorMessage from './ErrorMessage';
+import InputField from './InputField';
 
-const InterestRate = (props: NumberInputProps): React.JSX.Element => {
-  const { setValue } = props;
+const InterestRate = (): React.JSX.Element => {
+  const dispatch = useAppDispatch();
 
   const [annualInterestRate, setAnnualInterestRate] = useState<string>('');
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
   /**
    * event handler for setting the interest rate
@@ -18,30 +21,27 @@ const InterestRate = (props: NumberInputProps): React.JSX.Element => {
     const value: string = sanitizeNumberInput(event.target.value);
     const rate: number = Number.parseFloat(value);
 
-    if (validateNumber(rate, 0.1)) {
-      setErrorMessage('');
+    if (validateNumber(rate, 0, 100)) {
+      dispatch(setInterestRate(rate));
       setAnnualInterestRate(value);
-      setValue(rate / 12 / 100);
+      setErrorMessage(undefined);
     } else {
-      setErrorMessage('Please enter a positive number.');
+      dispatch(setInterestRate(0));
       setAnnualInterestRate('');
-      setValue(undefined);
+      setErrorMessage('Please enter a number between zero and one hunderd.');
     }
   };
 
   return (
     <>
-      <label className="text-gray-900">
-        Interest Rate
-        <input
-          className="border px-1 py-0.5 w-full"
-          name="interest-rate"
-          onChange={onChangeInterestRate}
-          placeholder="Annual Interest Rate"
-          value={annualInterestRate}
-        />
-      </label>
-      <span className="text-red-700 text-sm">{errorMessage}</span>
+      <InputField
+        label="Interest Rate"
+        name="interest-rate"
+        placeholder="Annual Interest Rate"
+        onChange={onChangeInterestRate}
+        value={annualInterestRate}
+      />
+      <ErrorMessage message={errorMessage} />
     </>
   );
 };
