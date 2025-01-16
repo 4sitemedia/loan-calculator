@@ -11,7 +11,6 @@ const LoanAmount = (): React.JSX.Element => {
 
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const [loanAmount, setLoanAmountValue] = useState<string>('');
-
   const purchasePrice: number = useAppSelector(selectPurchasePrice);
 
   /**

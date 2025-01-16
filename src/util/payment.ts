@@ -1,7 +1,16 @@
+const PMI_THRESHOLD = 0.8;
+
 /**
- * if possible, calculate a monthly mortgage payment based on the given data
- * based on the formula:
+ * calculate a monthly mortgage payment based on the given data based on the
+ * formula:
  * M = P * (r * (1 + r) ^ n) / ((1 + r) ^ (n - 1)) + PMI
+ *
+ * where
+ * M = monthly payment amount
+ * P = the total loan amount
+ * r = the monthly interest rate
+ * n = the total number of payments
+ * PMI = the additional private mortgage insurance amount if required
  *
  * @param parameters
  */
@@ -35,7 +44,7 @@ export const calculateMonthlyPaymentAmount = ({
     numberPayments,
   });
 
-  const pmi: number = calculatePMIAmount({
+  const pmi: number = calculateMonthlyPMIAmount({
     loanAmount,
     monthlyPMIRate,
     principalAmount,
@@ -45,6 +54,10 @@ export const calculateMonthlyPaymentAmount = ({
   return loanAmount * monthlyPercentage + pmi;
 };
 
+/**
+ * calculate the percentage of the loan amount paid per month based on the interest rate and number
+ * of payments
+ */
 const calculateMonthlyPercentage = ({
   monthlyInterestRate,
   numberPayments,
@@ -64,7 +77,11 @@ const calculateMonthlyPercentage = ({
   return dividend / divisor;
 };
 
-export const calculatePMIAmount = ({
+/**
+ * calculate the monthly pmi amount based on total loan amount and pmi rate.
+ * this is only required when the principal amount is more than 80% of the purchase price.
+ */
+export const calculateMonthlyPMIAmount = ({
   loanAmount,
   monthlyPMIRate,
   principalAmount,
@@ -75,7 +92,7 @@ export const calculatePMIAmount = ({
   principalAmount: number;
   purchasePrice: number;
 }): number => {
-  if (!monthlyPMIRate || principalAmount / purchasePrice <= 0.8) {
+  if (!monthlyPMIRate || principalAmount / purchasePrice <= PMI_THRESHOLD) {
     return 0;
   }
 

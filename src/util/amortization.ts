@@ -1,8 +1,14 @@
 import { AmortizationDataInterface } from '../types/AmortizationDataInterface';
 import { AmortizationDataItemInterface } from '../types/AmortizationDataItemInterface';
 import { formatCurrency } from './formatCurrency';
-import { calculateMonthlyPaymentAmount, calculatePMIAmount } from './payment';
+import {
+  calculateMonthlyPMIAmount,
+  calculateMonthlyPaymentAmount,
+} from './payment';
 
+/**
+ * calculate the amortization data based on the given loan data
+ */
 export const calculateAmortizationData = ({
   loanAmount,
   monthlyInterestRate,
@@ -27,13 +33,13 @@ export const calculateAmortizationData = ({
     };
   }
 
-  let principalAmount: number = loanAmount;
-
   const items: AmortizationDataItemInterface[] = [];
+
   let interestAmountTotal = 0;
   let numberPMIPayments = 0;
   let paymentAmountTotal = 0;
   let pmiAmountTotal = 0;
+  let principalAmount: number = loanAmount;
 
   for (
     let paymentNumber = 1;
@@ -50,13 +56,13 @@ export const calculateAmortizationData = ({
     });
     paymentAmountTotal += paymentAmount;
 
-    const interestAmount = calculateInterestAmount({
-      loanAmount: principalAmount,
+    const interestAmount = calculateMonthlyInterestAmount({
       monthlyInterestRate,
+      principalAmount,
     });
     interestAmountTotal += interestAmount;
 
-    const pmiAmount = calculatePMIAmount({
+    const pmiAmount = calculateMonthlyPMIAmount({
       loanAmount,
       monthlyPMIRate,
       principalAmount,
@@ -68,7 +74,7 @@ export const calculateAmortizationData = ({
       numberPMIPayments += 1;
     }
 
-    const loanPaymentAmount = calculateLoanPaymentAmount({
+    const loanPaymentAmount = calculateMonthlyPrincipalAmount({
       interestAmount,
       paymentAmount,
       pmiAmount,
@@ -101,17 +107,25 @@ export const calculateAmortizationData = ({
   };
 };
 
-export const calculateInterestAmount = ({
-  loanAmount,
+/**
+ * calculate the monthly interest payment amount based on the interest rate and
+ * remaining principal
+ */
+export const calculateMonthlyInterestAmount = ({
   monthlyInterestRate,
+  principalAmount,
 }: {
-  loanAmount: number;
   monthlyInterestRate: number;
+  principalAmount: number;
 }): number => {
-  return monthlyInterestRate * loanAmount;
+  return monthlyInterestRate * principalAmount;
 };
 
-export const calculateLoanPaymentAmount = ({
+/**
+ * calculate the monthly principal payment amount based on the total payment,
+ * interest, and pmi amounts
+ */
+export const calculateMonthlyPrincipalAmount = ({
   interestAmount,
   paymentAmount,
   pmiAmount,

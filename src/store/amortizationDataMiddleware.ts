@@ -11,6 +11,9 @@ import { RootState } from './store';
 
 export const amortizationDataMiddleware = createListenerMiddleware();
 
+/**
+ * update the amortization data whenever the loan data is changed
+ */
 amortizationDataMiddleware.startListening({
   effect: (_, listenerApi) => {
     const state: RootState = listenerApi.getState() as RootState;

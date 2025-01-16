@@ -1,9 +1,7 @@
 import { selectAmortizationData } from '../store/amortizationDataSlice';
 import { useAppSelector } from '../store/hooks';
-
 import { AmortizationDataInterface } from '../types/AmortizationDataInterface';
 import { AmortizationDataItemInterface } from '../types/AmortizationDataItemInterface';
-
 import { formatCurrency } from '../util/formatCurrency';
 import AmortizationTableRow from './AmortizationTableRow';
 

@@ -11,6 +11,7 @@ const MonthlyPayment = (): React.JSX.Element => {
   const numberPMIPayments: number = data.totals?.numberPMIPayments ?? 0;
   const numberPayments: number =
     (data.totals?.numberPayments ?? 0) - numberPMIPayments;
+
   const pmiAmount: string = data.items[0]?.paymentAmount ?? '';
   const paymentAmount: string =
     data.items[numberPMIPayments]?.paymentAmount ?? '';
