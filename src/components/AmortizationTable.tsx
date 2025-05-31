@@ -16,7 +16,7 @@ function AmortizationTable() {
 
   return (
     <>
-      <div className="border border-gray-400 h-120 rounded">
+      <div className="border border-gray-400 h-120 rounded-sm">
         <div className="bg-gray-200 px-4 py-2 text-xl">
           <h1>Amortization Table</h1>
         </div>
