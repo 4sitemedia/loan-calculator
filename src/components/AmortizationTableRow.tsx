@@ -5,7 +5,7 @@ function AmortizationTableRow(props: AmortizationTableRowProps) {
 
   return (
     <>
-      <tr>
+      <tr className="*:px-2 *:py-1 *:whitespace-nowrap">
         <td>{data.paymentNumber}</td>
         <td>{data.paymentAmount}</td>
         <td>{data.principalAmount}</td>

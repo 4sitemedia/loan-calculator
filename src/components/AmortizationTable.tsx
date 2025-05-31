@@ -16,11 +16,11 @@ function AmortizationTable() {
 
   return (
     <>
-      <div className="border border-gray-400 h-120 rounded-sm">
+      <div className="h-120 rounded-sm border border-gray-400">
         <div className="bg-gray-200 px-4 py-2 text-xl">
           <h1>Amortization Table</h1>
         </div>
-        <div className="h-100 my-4 overflow-y-auto px-4">
+        <div className="my-4 h-100 overflow-y-auto px-4">
           {rows.length === 0 ? (
             <span>
               Please enter the Purchase Price, Loan Amount, Interest Rate, Loan
@@ -28,19 +28,19 @@ function AmortizationTable() {
             </span>
           ) : (
             <table className="overflow-y-hidden text-left">
-              <thead className="bg-white sticky top-0">
-                <tr>
-                  <th className="pr-4">Payment Number</th>
-                  <th className="pr-4">Payment Amount</th>
-                  <th className="pr-4">Principal Amount</th>
-                  <th className="pr-4">Interest Amount</th>
-                  <th className="pr-4">PMI Amount</th>
-                  <th className="pr-4">Balance</th>
+              <thead className="sticky top-0 bg-white">
+                <tr className="bg-gray-100 *:px-2 *:py-1 *:whitespace-nowrap">
+                  <th>Payment Number</th>
+                  <th>Payment Amount</th>
+                  <th>Principal Amount</th>
+                  <th>Interest Amount</th>
+                  <th>PMI Amount</th>
+                  <th>Balance</th>
                 </tr>
               </thead>
               <tbody>{rows}</tbody>
-              <tfoot className="bg-white bottom-0 sticky">
-                <tr>
+              <tfoot className="sticky bottom-0 bg-white">
+                <tr className="bg-gray-100 *:px-2 *:py-1">
                   <th>Total</th>
                   <th>{formatCurrency(data.totals?.paymentAmountTotal)}</th>
                   <th>{formatCurrency(data.totals?.principalAmountTotal)}</th>

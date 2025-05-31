@@ -23,14 +23,14 @@ const LoanAmount = (): React.JSX.Element => {
     const value: string = sanitizeNumberInput(event.target.value);
     const amount: number = Number.parseFloat(value);
 
-    if (validateNumber(amount, 1) && amount < purchasePrice) {
+    if (validateNumber(amount, 1) && amount <= purchasePrice) {
       dispatch(setLoanAmount(amount));
       setErrorMessage(undefined);
       setLoanAmountValue(value.toString());
     } else {
       dispatch(setLoanAmount(0));
       setErrorMessage(
-        'Please enter a positive number that is less than the Purchase Price.'
+        'Please enter a positive number that is less than or equal to the Purchase Price.'
       );
       setLoanAmountValue('');
     }
