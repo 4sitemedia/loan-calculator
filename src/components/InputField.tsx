@@ -6,7 +6,8 @@ const InputField = (props: InputFieldProps): React.JSX.Element => {
       <label className="text-gray-900">
         {props.label}
         <input
-          className="border px-1 py-0.5 w-full"
+          className="w-full border px-1 py-0.5"
+          inputMode="decimal"
           name={props.name}
           onChange={props.onChange}
           placeholder={props.placeholder}

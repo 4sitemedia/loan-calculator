@@ -8,7 +8,7 @@ import PurchasePrice from './PurchasePrice';
 function LoanPaymentCalculator() {
   return (
     <>
-      <div className="border border-gray-400 h-120 rounded-sm">
+      <div className="h-120 rounded-sm border border-gray-400">
         <div className="bg-gray-200 px-4 py-2 text-xl">
           <h1>Loan Payment Calculator</h1>
         </div>

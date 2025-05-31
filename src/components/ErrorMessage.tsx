@@ -4,7 +4,7 @@ const ErrorMessage = (props: ErrorMessageProps): React.JSX.Element => {
   return (
     <>
       {props.message ? (
-        <div className="text-red-700 text-sm">{props.message}</div>
+        <div className="text-sm text-red-700">{props.message}</div>
       ) : null}
     </>
   );
