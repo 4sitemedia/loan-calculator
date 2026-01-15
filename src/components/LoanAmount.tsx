@@ -26,7 +26,7 @@ const LoanAmount = (): React.JSX.Element => {
     if (validateNumber(amount, 1) && amount <= purchasePrice) {
       dispatch(setLoanAmount(amount));
       setErrorMessage(undefined);
-      setLoanAmountValue(value.toString());
+      setLoanAmountValue(value);
     } else {
       dispatch(setLoanAmount(0));
       setErrorMessage(

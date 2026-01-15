@@ -24,7 +24,7 @@ const PurchasePrice = (): React.JSX.Element => {
     if (validateNumber(amount, 1)) {
       dispatch(setPurchasePrice(amount));
       setErrorMessage(undefined);
-      setPurchasePriceValue(value.toString());
+      setPurchasePriceValue(value);
     } else {
       dispatch(setPurchasePrice(0));
       setErrorMessage('Please enter a positive number.');
